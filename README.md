@@ -2,7 +2,7 @@
 
 A zero-dependency, native Windows OS utility built entirely from scratch in C# to monitor, filter, and execute system processes.
 
-![App Screenshot](./screenshot.png)
+![App Screenshot](./Screenshot.png)
 
 ## 🧠 The Architecture & "The Why"
 I built this project to fix my engineering foundation. I realized I was relying too heavily on web frameworks, so I stepped back to build something that communicates directly with the operating system on bare metal. 
