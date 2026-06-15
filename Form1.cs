@@ -36,6 +36,9 @@ public partial class Form1 : Form
         this.Size = new Size(700, 400);
         this.StartPosition = FormStartPosition.CenterScreen;
 
+        this.FormBorderStyle = FormBorderStyle.FixedDialog;
+        this.MaximizeBox = false;
+
         // Setup the Input Box
         txtProcessId = new TextBox();
         txtProcessId.Location = new Point(60, 40);
