@@ -138,30 +138,43 @@ public partial class Form1 : Form
         }
     }
 
-    private void ProcessList_Click(object? sender, EventArgs e)
+    private async void ProcessList_Click(object? sender, EventArgs e)
     {
         try
         {
-            Process[] processes = Process.GetProcesses();
-            _masterProcessList.Clear();
+            showProcessList.Enabled = false;
+            showProcessList.Text = "LOADING...";
 
-            foreach (var process in processes)
+            await Task.Run(() =>
             {
-                var myTask = new SystemTask();
+                Process[] processes = Process.GetProcesses();
+                _masterProcessList.Clear();
 
-                myTask.ProcessId = process.Id;
-                myTask.ProcessName = process.ProcessName;
+                foreach (var process in processes)
+                {
+                    var myTask = new SystemTask();
 
-                _masterProcessList.Add(myTask);
-            }
+                    myTask.ProcessId = process.Id;
+                    myTask.ProcessName = process.ProcessName;
 
+                    _masterProcessList.Add(myTask);
+                }
+            });
+
+            processList.BeginUpdate(); // Freeze the UI redraw
             processList.Items.Clear();
-
             processList.Items.AddRange(_masterProcessList.ToArray());
+            processList.EndUpdate();
         }
         catch (Exception ex)
         {
             MessageBox.Show($"Execution failed: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+        finally
+        {
+            // Turn the button back on, even if there's an error
+            showProcessList.Enabled = true;
+            showProcessList.Text = "SHOW PROCESS LIST";
         }
     }
 
